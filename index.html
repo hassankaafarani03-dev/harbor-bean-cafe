@@ -1,224 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Harbor & Bean Cafe in Sidon">
-  <title>Harbor & Bean Cafe</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4ede2" />
+  <title>Calla Café — Tyre, Lebanon</title>
+  <meta name="description" content="Calla Café in Tyre, Lebanon — a luxury Mediterranean café experience with premium coffee, pastries, desserts, and seaside atmosphere." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    :root{
+      --ivory:#f7f1e8;
+      --cream:#f2e7d7;
+      --beige:#dcc8ae;
+      --espresso:#2a1c16;
+      --espresso-2:#3a2a22;
+      --gold:#c9a46a;
+      --white:#fffdf9;
+      --glass: rgba(255,255,255,.12);
+      --border: rgba(201,164,106,.22);
+      --shadow: 0 24px 80px rgba(43,28,20,.14);
+    }
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:radial-gradient(circle at top, #fff 0%, var(--ivory) 35%, #efe5d7 100%);
+      color:var(--espresso);
+      font-family:Inter,system-ui,sans-serif;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    .serif{font-family:'Cormorant Garamond',serif}
+    .noise:before{
+      content:'';
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.05;
+      background-image:url('https://grainy-gradients.vercel.app/noise.svg');
+      mix-blend-mode:multiply;
+      z-index:50;
+    }
+    .glass{
+      background:linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.08));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border:1px solid rgba(255,255,255,.16);
+    }
+    .lux-btn{
+      transition:transform .35s ease, box-shadow .35s ease, background .35s ease, border-color .35s ease;
+      box-shadow:0 10px 30px rgba(42,28,22,.14);
+    }
+    .lux-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 36px rgba(42,28,22,.18);
+    }
+    .menu-card{
+      transform-style:preserve-3d;
+      transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    }
+    .menu-card:hover{
+      border-color:rgba(201,164,106,.45);
+      box-shadow:0 24px 70px rgba(42,28,22,.16);
+    }
+    .depth{transform-style:preserve-3d}
+    .float{animation:float 8s ease-in-out infinite}
+    .float2{animation:float 10s ease-in-out infinite reverse}
+    @keyframes float{
+      0%,100%{transform:translateY(0px)}
+      50%{transform:translateY(-12px)}
+    }
+    .reveal{
+      opacity:0;
+      transform:translateY(28px) scale(.98);
+    }
+    .hero-bg{
+      background:
+        linear-gradient(180deg, rgba(34,22,17,.25), rgba(34,22,17,.55)),
+        url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat;
+    }
+    .hero-overlay{
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.12), transparent 28%),
+        radial-gradient(circle at 80% 10%, rgba(201,164,106,.18), transparent 22%),
+        linear-gradient(180deg, rgba(31,20,16,.18), rgba(31,20,16,.62));
+    }
+    .gallery-item{
+      break-inside:avoid;
+      margin-bottom:1.2rem;
+      overflow:hidden;
+      border-radius:1.6rem;
+      position:relative;
+      box-shadow:0 18px 50px rgba(42,28,22,.08);
+    }
+    .gallery-item img{
+      width:100%;
+      height:auto;
+      display:block;
+      transition:transform .8s cubic-bezier(.2,.8,.2,1), filter .8s ease;
+    }
+    .gallery-item:hover img{
+      transform:scale(1.06);
+    }
+    .cursor{
+      position:fixed;
+      left:0;
+      top:0;
+      width:22px;
+      height:22px;
+      border:1px solid rgba(201,164,106,.65);
+      border-radius:999px;
+      pointer-events:none;
+      mix-blend-mode:multiply;
+      transform:translate(-50%,-50%);
+      z-index:60;
+      transition:width .2s,height .2s,background .2s;
+    }
+    .cursor.active{
+      width:54px;
+      height:54px;
+      background:rgba(201,164,106,.10);
+    }
+    .nav-glow{
+      box-shadow:0 10px 30px rgba(34,22,16,.08);
+    }
+  </style>
 </head>
+<body class="noise">
+  <div class="cursor hidden md:block"></div>
 
-<body>
-  <div class="background-orb orb-one"></div>
-  <div class="background-orb orb-two"></div>
-
-  <header class="navbar">
-    <a class="logo" href="#home">
-      <span>H</span>ARBOR<span class="orange">&</span>BEAN
-    </a>
-
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-
-    <nav id="navigation">
-      <a href="#menu">Menu</a>
-      <a href="#story">Our Story</a>
-      <a href="#visit">Visit</a>
-    </nav>
-
-    <a href="#visit" class="nav-button">Book a table</a>
+  <header id="nav" class="fixed top-0 left-0 right-0 z-40 transition-all duration-500">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+      <div class="glass nav-glow rounded-full px-5 py-3 flex items-center justify-between">
+        <a href="#home" class="serif text-2xl tracking-[.32em] font-semibold text-[#2a1c16]">CALLA</a>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-[#3a2a22]">
+          <a href="#home" class="hover:text-[#a77c45] transition">Home</a>
+          <a href="#menu" class="hover:text-[#a77c45] transition">Menu</a>
+          <a href="#gallery" class="hover:text-[#a77c45] transition">Gallery</a>
+          <a href="#about" class="hover:text-[#a77c45] transition">About</a>
+          <a href="#visit" class="hover:text-[#a77c45] transition">Visit</a>
+        </nav>
+        <a href="#visit" class="md:hidden text-sm font-semibold text-[#2a1c16]">Visit</a>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <section id="home" class="hero">
-      <div class="hero-content">
-        <p class="eyebrow">Specialty coffee · Sidon, Lebanon</p>
+  <main id="home">
+    <section class="relative min-h-screen flex items-center hero-bg overflow-hidden">
+      <div class="absolute inset-0 hero-overlay"></div>
+      <div class="absolute inset-0" id="parallaxRoot"></div>
 
-        <h1>
-          Taste the moment.
-          <span>Feel the difference.</span>
-        </h1>
+      <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full pt-28 pb-20">
+        <div class="grid lg:grid-cols-2 gap-14 items-center">
+          <div class="text-white max-w-2xl">
+            <p class="uppercase tracking-[.4em] text-sm text-[#f3e2c4] mb-5 reveal">Tyre, Lebanon · Mediterranean Café</p>
+            <h1 class="serif text-6xl sm:text-7xl lg:text-8xl leading-[.9] font-semibold reveal">CALLA CAFÉ</h1>
+            <p class="serif text-3xl sm:text-4xl lg:text-5xl mt-4 text-[#f5e8d3] reveal">Where every moment tastes better.</p>
+            <p class="mt-6 text-base sm:text-lg text-white/80 max-w-xl reveal">Coffee, pastries, desserts and unforgettable moments by the sea.</p>
 
-        <p class="hero-description">
-          A creative coffee house where beautiful drinks, fresh food,
-          and good conversations come together.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#menu" class="primary-button">Explore menu <b>↗</b></a>
-          <a href="#story" class="secondary-button">Discover our story</a>
-        </div>
-
-        <div class="hero-details">
-          <div>
-            <strong>08:00</strong>
-            <small>Open every day</small>
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 reveal">
+              <a href="#menu" class="lux-btn inline-flex justify-center items-center rounded-full bg-[#f5eadb] text-[#2a1c16] px-7 py-4 font-semibold">Explore Our Menu</a>
+              <a href="#visit" class="lux-btn inline-flex justify-center items-center rounded-full border border-white/30 bg-white/8 text-white px-7 py-4 font-semibold">Visit Calla</a>
+            </div>
           </div>
 
-          <div>
-            <strong>Sea Road</strong>
-            <small>Sidon, Lebanon</small>
+          <div class="relative min-h-[520px] lg:min-h-[720px] depth">
+            <div class="absolute top-10 right-6 lg:right-16 w-40 sm:w-52 lg:w-60 glass rounded-[2rem] p-3 shadow-2xl float reveal" data-depth="0.6">
+              <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80" class="rounded-[1.4rem] object-cover w-full h-56" alt="Coffee" />
+              <div class="mt-3 text-white">
+                <p class="text-sm uppercase tracking-[.3em] text-[#f1d8ab]">Signature Coffee</p>
+                <p class="serif text-2xl">Espresso Elegance</p>
+              </div>
+            </div>
+
+            <div class="absolute left-2 sm:left-10 top-32 w-44 sm:w-56 lg:w-64 glass rounded-[2rem] p-3 shadow-2xl float2 reveal" data-depth="0.3">
+              <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=900&q=80" class="rounded-[1.4rem] object-cover w-full h-60" alt="Pastries" />
+              <div class="mt-3 text-white">
+                <p class="text-sm uppercase tracking-[.3em] text-[#f1d8ab]">Fresh Pastries</p>
+                <p class="serif text-2xl">Buttery Layers</p>
+              </div>
+            </div>
+
+            <div class="absolute bottom-6 right-0 sm:right-12 w-48 sm:w-60 lg:w-72 glass rounded-[2rem] p-3 shadow-2xl float reveal" data-depth="0.8">
+              <img src="https://images.unsplash.com/photo-1505253716362-afaea6a7f6e8?auto=format&fit=crop&w=900&q=80" class="rounded-[1.4rem] object-cover w-full h-64" alt="Dessert" />
+              <div class="mt-3 text-white">
+                <p class="text-sm uppercase tracking-[.3em] text-[#f1d8ab]">Sweet Moments</p>
+                <p class="serif text-2xl">Velvet Desserts</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="scene" id="scene">
-        <div class="floating-label label-one">Freshly roasted</div>
-        <div class="floating-label label-two">Made with love</div>
-
-        <div class="coffee-shadow"></div>
-
-        <div class="cup-3d">
-          <div class="cup-top">
-            <div class="coffee-liquid"></div>
-          </div>
-          <div class="cup-body"></div>
-          <div class="cup-handle"></div>
-          <div class="cup-logo">H&B</div>
-        </div>
-
-        <div class="coffee-bean bean-one">●</div>
-        <div class="coffee-bean bean-two">●</div>
-        <div class="coffee-bean bean-three">●</div>
-
-        <div class="steam steam-one"></div>
-        <div class="steam steam-two"></div>
-        <div class="steam steam-three"></div>
       </div>
     </section>
 
-    <section id="menu" class="menu-section">
-      <div class="section-intro">
-        <p class="eyebrow">Our favorites</p>
-        <h2>Made to be remembered.</h2>
-        <p>
-          Every cup has a story. Every bite has a little surprise.
-        </p>
-      </div>
-
-      <div class="menu-grid">
-        <article class="menu-card">
-          <div class="card-number">01</div>
-          <div class="card-icon">☕</div>
-          <h3>Signature Coffee</h3>
-          <p>
-            Rich espresso, smooth flat whites, cold brews,
-            and coffee crafted around your mood.
-          </p>
-          <a href="#visit">Discover drinks <span>↗</span></a>
-        </article>
-
-        <article class="menu-card featured-card">
-          <div class="card-number">02</div>
-          <div class="card-icon">🥐</div>
-          <h3>Daily Pastries</h3>
-          <p>
-            Golden croissants, soft cakes, cinnamon rolls,
-            and fresh treats made every morning.
-          </p>
-          <a href="#visit">See today's bakes <span>↗</span></a>
-        </article>
-
-        <article class="menu-card">
-          <div class="card-number">03</div>
-          <div class="card-icon">🥗</div>
-          <h3>Fresh Bites</h3>
-          <p>
-            Colorful salads, delicious sandwiches, and
-            satisfying plates for any time of day.
-          </p>
-          <a href="#visit">View food menu <span>↗</span></a>
-        </article>
+    <section id="menu" class="py-24 sm:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-6 mb-10 reveal">
+          <div>
+            <p class="uppercase tracking-[.35em] text-xs text-[#8f6b40]">Menu</p>
+            <h2 class="serif text-5xl sm:text-6xl mt-3">Curated with care</h2>
+          </div>
+          <p class="max-w-xl text-[#5d4b40]">Premium cards with editable placeholders where the exact item name or price is not confirmed from the photos.</p>
+        </div>
+        <div id="menuGrid" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6"></div>
       </div>
     </section>
 
-    <section id="story" class="story-section">
-      <div class="story-image">
-        <div class="image-circle">
-          <span>☕</span>
+    <section id="gallery" class="py-24 sm:py-28 bg-[linear-gradient(180deg,rgba(255,255,255,.35),rgba(242,231,215,.65))]">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mb-10 reveal">
+          <p class="uppercase tracking-[.35em] text-xs text-[#8f6b40]">Gallery</p>
+          <h2 class="serif text-5xl sm:text-6xl mt-3">A seaside atmosphere</h2>
         </div>
-        <div class="story-sticker">Since<br><b>2026</b></div>
-      </div>
-
-      <div class="story-content">
-        <p class="eyebrow">The Harbor & Bean story</p>
-        <h2>Not just a café.<br>A feeling.</h2>
-        <p>
-          We created Harbor & Bean as a place to slow down,
-          connect with people, and enjoy the small things.
-        </p>
-        <p>
-          Inspired by the colors of the Mediterranean and the energy
-          of Sidon, our café brings together warm hospitality,
-          creative coffee, and a little everyday magic.
-        </p>
-        <a href="#visit" class="line-link">Come experience it <span>→</span></a>
+        <div id="galleryGrid" class="columns-1 sm:columns-2 xl:columns-3 gap-5"></div>
       </div>
     </section>
 
-    <section id="visit" class="visit-section">
-      <div class="visit-box">
-        <p class="eyebrow">Your table is waiting</p>
-        <h2>Meet us by the sea.</h2>
-        <p>
-          Come for breakfast, stay for sunset.
-        </p>
+    <section id="about" class="py-24 sm:py-28">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center reveal">
+        <p class="uppercase tracking-[.35em] text-xs text-[#8f6b40]">About</p>
+        <h2 class="serif text-5xl sm:text-6xl mt-3">A refined place to linger</h2>
+        <p class="mt-6 text-lg leading-8 text-[#5d4b40]">Calla Café is designed as an elegant destination for premium coffee, artisan pastries, desserts, and slow moments by the sea. The experience feels luxurious, warm, and calm — a modern café with Mediterranean character.</p>
+      </div>
+    </section>
 
-        <div class="visit-columns">
-          <div>
-            <small>LOCATION</small>
-            <p>Sea Road<br>Sidon, South Lebanon</p>
+    <section id="visit" class="py-24 sm:py-28 relative overflow-hidden">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(201,164,106,.13),transparent_35%),linear-gradient(180deg,rgba(255,255,255,.2),rgba(245,236,225,.9))]"></div>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+        <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+          <div class="glass rounded-[2rem] p-8 sm:p-10 shadow-2xl reveal">
+            <p class="uppercase tracking-[.35em] text-xs text-[#8f6b40]">Visit Calla</p>
+            <h2 class="serif text-5xl sm:text-6xl mt-3">Tyre, Lebanon</h2>
+            <p class="mt-4 text-[#5d4b40]">Corniche, Tyre · Speciality coffee and artisan pastries by the Mediterranean coast.</p>
+            <div class="mt-8 grid sm:grid-cols-2 gap-4 text-sm text-[#3a2a22]">
+              <div class="rounded-2xl bg-white/55 p-5 border border-white/60">
+                <p class="font-semibold mb-2">Opening Hours</p>
+                <p>Daily · 07:30–00:00</p>
+              </div>
+              <div class="rounded-2xl bg-white/55 p-5 border border-white/60">
+                <p class="font-semibold mb-2">Contact</p>
+                <p>Phone available on the official listing</p>
+              </div>
+            </div>
+            <div class="mt-8 flex flex-col sm:flex-row gap-4">
+              <a class="lux-btn rounded-full bg-[#2a1c16] text-white px-6 py-4 text-center font-semibold" href="https://www.google.com/maps/search/?api=1&query=Calla+Cafe+Tyre+Lebanon" target="_blank" rel="noopener">Open in Google Maps</a>
+              <a class="lux-btn rounded-full border border-[#c9a46a] text-[#2a1c16] px-6 py-4 text-center font-semibold" href="https://www.instagram.com/calla_leb/" target="_blank" rel="noopener">Instagram</a>
+            </div>
           </div>
-
-          <div>
-            <small>OPENING HOURS</small>
-            <p>Every day<br>8:00 AM – 10:00 PM</p>
-          </div>
-
-          <div>
-            <small>CONTACT</small>
-            <p>
-              <a href="tel:+96170000000">+961 70 000 000</a><br>
-              <a href="mailto:hello@harborbean.cafe">
-                hello@harborbean.cafe
-              </a>
-            </p>
+          <div class="rounded-[2rem] overflow-hidden min-h-[420px] shadow-2xl reveal">
+            <iframe title="Calla Café Map" class="w-full h-full min-h-[420px]" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Calla%20Cafe%20Tyre%20Lebanon&output=embed"></iframe>
           </div>
         </div>
-
-        <a href="tel:+96170000000" class="primary-button">
-          Reserve your table <b>↗</b>
-        </a>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="logo">
-      <span>H</span>ARBOR<span class="orange">&</span>BEAN
-    </div>
-    <p>Good coffee. Good people. Good moments.</p>
-    <p>© 2026 Harbor & Bean</p>
-  </footer>
-
   <script>
-    function toggleMenu() {
-      document.getElementById("navigation").classList.toggle("show");
-    }
+    const menuItems = [
+      {cat:'Coffee', name:'Espresso / Specialty Coffee', desc:'Premium coffee service inspired by the café’s signature warm atmosphere.', price:'Price —', img:'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1200&q=80'},
+      {cat:'Cold Drinks', name:'Iced Signature Drinks', desc:'Chilled café drinks served with an elegant presentation.', price:'Price —', img:'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=1200&q=80'},
+      {cat:'Desserts', name:'House Dessert Selection', desc:'A refined dessert showcase based on the provided photo set.', price:'Price —', img:'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80'},
+      {cat:'Ice Cream / Soft Serve', name:'Soft Serve / Frozen Treats', desc:'Creamy frozen desserts with a luxury café finish.', price:'Price —', img:'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=1200&q=80'},
+      {cat:'Cookies', name:'Buttery Cookies', desc:'Fresh-baked cookies with a premium bakery presentation.', price:'Price —', img:'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=80'},
+      {cat:'Croissants & Pastries', name:'Croissants & Viennoiserie', desc:'Flaky pastries and morning favorites with a European feel.', price:'Price —', img:'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=1200&q=80'},
+      {cat:'Cakes & Cheesecakes', name:'Cake Counter Selection', desc:'Elegant cakes and cheesecakes presented as premium showcase items.', price:'Price —', img:'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80'}
+    ];
+    const galleryImgs = [
+      'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1509112842845-5b3f8b7efb63?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80'
+    ];
 
-    const scene = document.getElementById("scene");
+    const menuGrid = document.getElementById('menuGrid');
+    menuGrid.innerHTML = menuItems.map(i => `
+      <article class="menu-card glass rounded-[2rem] overflow-hidden border border-white/30 depth">
+        <div class="relative overflow-hidden">
+          <img src="${i.img}" alt="${i.name}" class="w-full h-72 object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
+          <span class="absolute top-4 left-4 bg-white/85 text-[#2a1c16] text-xs font-semibold uppercase tracking-[.3em] px-3 py-2 rounded-full">${i.cat}</span>
+        </div>
+        <div class="p-6">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="serif text-3xl leading-tight">${i.name}</h3>
+          </div>
+          <p class="mt-3 text-[#5d4b40] leading-7">${i.desc}</p>
+          <div class="mt-5 flex items-center justify-between">
+            <span class="text-[#8f6b40] font-semibold">${i.price}</span>
+            <span class="text-xs uppercase tracking-[.3em] text-[#b08a55]">Premium</span>
+          </div>
+        </div>
+      </article>
+    `).join('');
 
-    document.addEventListener("mousemove", function(event) {
-      if (window.innerWidth <= 700) return;
+    const galleryGrid = document.getElementById('galleryGrid');
+    galleryGrid.innerHTML = galleryImgs.map((src, idx) => `
+      <div class="gallery-item reveal" style="aspect-ratio:${idx%3===0?'4/5':idx%3===1?'1/1':'3/4'}">
+        <img src="${src}" alt="Calla Café gallery image ${idx+1}"/>
+      </div>
+    `).join('');
 
-      const x = (window.innerWidth / 2 - event.clientX) / 35;
-      const y = (window.innerHeight / 2 - event.clientY) / 35;
-
-      scene.style.transform =
-        `rotateY(${-x}deg) rotateX(${y}deg)`;
+    const cursor = document.querySelector('.cursor');
+    document.addEventListener('mousemove', e => {
+      if(cursor){
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      }
     });
 
-    document.addEventListener("mouseleave", function() {
-      scene.style.transform = "rotateY(0deg) rotateX(0deg)";
+    document.querySelectorAll('a,button,.menu-card,.gallery-item').forEach(el=>{
+      el.addEventListener('mouseenter',()=>cursor?.classList.add('active'));
+      el.addEventListener('mouseleave',()=>cursor?.classList.remove('active'));
+    });
+
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll',()=>{
+      nav.classList.toggle('glass', window.scrollY > 12);
+      nav.style.paddingTop = window.scrollY > 12 ? '6px' : '0px';
+    });
+
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach(el => {
+      gsap.to(el,{
+        opacity:1,
+        y:0,
+        scale:1,
+        duration:1.1,
+        ease:'power3.out',
+        scrollTrigger:{trigger:el,start:'top 85%'}
+      });
+    });
+
+    document.querySelectorAll('.menu-card').forEach((card)=>{
+      card.addEventListener('mousemove',e=>{
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX-r.left)/r.width;
+        const y = (e.clientY-r.top)/r.height;
+        card.style.transform = `perspective(1200px) rotateX(${(0.5-y)*10}deg) rotateY(${(x-0.5)*12}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave',()=>{
+        card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      });
+    });
+
+    window.addEventListener('scroll',()=>{
+      const y = window.scrollY;
+      document.querySelectorAll('[data-depth]').forEach(el=>{
+        const d = parseFloat(el.dataset.depth || '0.3');
+        el.style.transform = `translate3d(0, ${y*d*0.03}px, 0)`;
+      });
     });
   </script>
 </body>
